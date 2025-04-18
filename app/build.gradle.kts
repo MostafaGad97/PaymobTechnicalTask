@@ -6,7 +6,9 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.serialization.plugin)}
+    alias(libs.plugins.serialization.plugin)
+}
+
 
 android {
     namespace = "com.example.paymobtechnicaltask"
@@ -84,6 +86,11 @@ dependencies {
     implementation(libs.jakewharton.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.okhttp)
     implementation(libs.gson)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     //Glide
     implementation(libs.glide)
