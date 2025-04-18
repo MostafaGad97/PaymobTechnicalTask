@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -16,6 +19,14 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val properties = Properties()
+        if (project.rootProject.file("Config").canRead()) {
+            properties.load(FileInputStream(project.rootProject.file("config")))
+        }
+        buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
+        buildConfigField("String", "REMOTE_URL", properties.getProperty("REMOTE_URL"))
+
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -28,12 +39,19 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
     }
 }
 
