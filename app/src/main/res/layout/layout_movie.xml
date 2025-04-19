@@ -4,20 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_margin="@dimen/_5sdp"
-    android:background="@drawable/bg_gray_rounded"
     android:layout_height="@dimen/_160sdp">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_poster"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_160sdp"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/img_round" />
 
-    <View
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/mask_gradient" />
+        android:background="@drawable/mask_gradient"
+        app:shapeAppearanceOverlay="@style/img_round"/>
 
     <ImageButton
         android:id="@+id/btn_favorite"

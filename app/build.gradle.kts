@@ -86,6 +86,7 @@ dependencies {
     implementation(libs.jakewharton.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.okhttp)
     implementation(libs.gson)
+    implementation(libs.logging.interceptor)
 
     //Room
     implementation(libs.androidx.room.runtime)
