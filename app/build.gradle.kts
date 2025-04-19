@@ -98,6 +98,10 @@ dependencies {
     //Paging
     implementation(libs.androidx.paging.runtime)
 
+    //Intuit
+    implementation(libs.sdp.android)
+    implementation(libs.intuit.ssp.android)
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
