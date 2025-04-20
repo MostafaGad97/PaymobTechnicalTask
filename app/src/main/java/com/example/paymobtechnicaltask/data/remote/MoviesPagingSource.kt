@@ -3,6 +3,7 @@ package com.example.paymobtechnicaltask.data.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.paymobtechnicaltask.data.remote.dto.MovieDto
+import com.example.paymobtechnicaltask.data.utils.handlePagingError
 
 class MoviesPagingSource(
     private val api: MoviesService
@@ -18,7 +19,7 @@ class MoviesPagingSource(
                 nextKey = if (response.results?.isEmpty() == true) null else page + 1
             )
         } catch (e: Exception) {
-            LoadResult.Error(e)
+            return handlePagingError(e)
         }
     }
 

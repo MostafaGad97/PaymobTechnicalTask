@@ -8,14 +8,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.paymobtechnicaltask.R
 import com.example.paymobtechnicaltask.databinding.FragmentMoviesBinding
 import com.example.paymobtechnicaltask.domain.model.Movie
 import com.example.paymobtechnicaltask.ui.base.BaseFragment
 import com.example.paymobtechnicaltask.ui.movies.adapter.MovieLoadStateAdapter
 import com.example.paymobtechnicaltask.ui.movies.adapter.MoviesAdapter
+import com.example.paymobtechnicaltask.ui.utils.showErrorMessage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -49,7 +48,7 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         with(binding) {
             layoutEmpty.btnRetry.setOnClickListener {
                 getMovies()
-                layoutEmpty.root.isVisible = true
+                layoutEmpty.root.isVisible = false
             }
         }
     }
@@ -74,10 +73,9 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
     private fun getMoviesObserver() {
         lifecycleScope.launch {
-            viewModel.moviesResponse.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                .collectLatest { movies ->
-                    moviesAdapter.submitData(lifecycle, movies)
-                }
+            viewModel.moviesResponse.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collectLatest { movies ->
+                moviesAdapter.submitData(lifecycle, movies)
+            }
         }
     }
 
@@ -89,20 +87,24 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
 
                     is LoadState.Error -> {
                         val error = (it.refresh as LoadState.Error).error
-                        handleEmptyData(moviesAdapter.itemCount < 1)
+                        showErrorMessage(error)
+                        if(moviesAdapter.itemCount < 1) {
+                            handleErrorLayout()
+                        }
                     }
 
                     is LoadState.NotLoading -> {
-                        handleEmptyData(moviesAdapter.itemCount < 1)
+                        if(moviesAdapter.itemCount < 1) {
+                            handleErrorLayout()
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun handleEmptyData(isEmpty: Boolean) {
-        binding.rvMovies.isVisible = !isEmpty
-        binding.layoutEmpty.root.isVisible = isEmpty
+    private fun handleErrorLayout() {
+        binding.layoutEmpty.root.isVisible = true
     }
 
     private fun onFavoriteClicked(movie: Movie) {
