@@ -19,10 +19,11 @@
         android:background="@drawable/mask_cover" />
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/layout_toolbar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        app:titleTextColor="@color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -33,6 +34,7 @@
         android:layout_marginBottom="@dimen/_6sdp"
         android:textAlignment="viewStart"
         android:textSize="@dimen/_12ssp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_release_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:gravity="center_horizontal"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,8 +109,17 @@
         android:contentDescription="favorite"
         android:src="@drawable/selector_favorite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/layout_toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

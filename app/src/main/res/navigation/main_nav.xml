@@ -8,4 +8,17 @@
         android:id="@+id/moviesFragment"
         android:name="com.example.paymobtechnicaltask.ui.movies.MoviesFragment" />
 
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.example.paymobtechnicaltask.ui.movie_details.MovieDetailsFragment">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+
+    <!--actions-->
+
+    <action
+        android:id="@+id/action_moviesFragment_to_movieDetailsFragment"
+        app:destination="@id/movieDetailsFragment" />
 </navigation>

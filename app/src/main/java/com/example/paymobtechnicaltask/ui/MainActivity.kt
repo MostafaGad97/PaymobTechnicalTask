@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.findNavController
 import com.example.paymobtechnicaltask.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         onBackPressedDispatcher.addCallback(this) {
-            finish()
+            val navController = findNavController(R.id.nav_host_fragment)
+            if (navController.currentDestination?.id == R.id.moviesFragment) {
+                finish()
+            } else {
+                navController.navigateUp()
+            }
         }
     }
 }

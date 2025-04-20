@@ -2,16 +2,20 @@ package com.example.paymobtechnicaltask.ui.movies
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.paymobtechnicaltask.R
 import com.example.paymobtechnicaltask.databinding.FragmentMoviesBinding
 import com.example.paymobtechnicaltask.domain.model.Movie
 import com.example.paymobtechnicaltask.ui.base.BaseFragment
+import com.example.paymobtechnicaltask.ui.movies.adapter.MovieClickListener
 import com.example.paymobtechnicaltask.ui.movies.adapter.MovieLoadStateAdapter
 import com.example.paymobtechnicaltask.ui.movies.adapter.MoviesAdapter
 import com.example.paymobtechnicaltask.ui.utils.showErrorMessage
@@ -20,12 +24,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding::inflate) {
+class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding::inflate), MovieClickListener {
 
     private val viewModel: MoviesViewModel by viewModels()
 
     private val moviesAdapter by lazy {
-        MoviesAdapter(::onFavoriteClicked)
+        MoviesAdapter(this)
     }
 
     private val footerAdapter by lazy {
@@ -107,7 +111,14 @@ class MoviesFragment : BaseFragment<FragmentMoviesBinding>(FragmentMoviesBinding
         binding.layoutEmpty.root.isVisible = true
     }
 
-    private fun onFavoriteClicked(movie: Movie) {
+    override fun onMovieClick(movie: Movie) {
+        findNavController().navigate(
+            R.id.action_moviesFragment_to_movieDetailsFragment,
+            bundleOf("movieId" to movie.id)
+        )
+    }
+
+    override fun onFavoriteClick(movie: Movie) {
         viewModel.toggleFavorite(movie)
     }
 }

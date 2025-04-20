@@ -5,3 +5,14 @@ plugins {
     alias(libs.plugins.dagger.hilt) apply false
     alias(libs.plugins.ksp) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven ( url = "https://www.jitpack.io")
+    }
+    dependencies {
+        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
+    }
+}
