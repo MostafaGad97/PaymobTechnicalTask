@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_margin="@dimen/_5sdp"
+    android:layout_height="@dimen/_160sdp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_poster"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_160sdp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/img_round" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/mask_gradient"
+        app:shapeAppearanceOverlay="@style/img_round"/>
+
+    <ImageButton
+        android:id="@+id/btn_favorite"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:background="@android:color/transparent"
+        android:contentDescription="favorite"
+        android:src="@drawable/selector_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_realise_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_realise_date"
+        tools:text="The Dark Knight" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_realise_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="21/5/2024" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:drawablePadding="@dimen/_3sdp"
+        android:gravity="center_vertical"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_10ssp"
+        app:drawableStartCompat="@drawable/ic_star"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_realise_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_realise_date"
+        tools:text="4.8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

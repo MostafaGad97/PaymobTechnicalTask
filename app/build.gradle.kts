@@ -86,6 +86,7 @@ dependencies {
     implementation(libs.jakewharton.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.okhttp)
     implementation(libs.gson)
+    implementation(libs.logging.interceptor)
 
     //Room
     implementation(libs.androidx.room.runtime)
@@ -97,6 +98,10 @@ dependencies {
 
     //Paging
     implementation(libs.androidx.paging.runtime)
+
+    //Intuit
+    implementation(libs.sdp.android)
+    implementation(libs.intuit.ssp.android)
 
     // Testing
     testImplementation(libs.junit)
