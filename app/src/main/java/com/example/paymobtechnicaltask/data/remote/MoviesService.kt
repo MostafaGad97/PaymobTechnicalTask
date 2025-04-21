@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface MoviesService {
 
     @GET("discover/movie")
-    suspend fun getPopularMovies(
+    suspend fun getMovies(
         @Query("page") page: Int,
         @Query("primary_release_year") releaseDate: Int = 2024
     ): MovieResponseDto

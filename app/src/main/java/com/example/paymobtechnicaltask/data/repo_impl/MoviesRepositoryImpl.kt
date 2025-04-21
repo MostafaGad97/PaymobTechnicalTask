@@ -6,8 +6,8 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.paymobtechnicaltask.data.datasource.LocalDataSource
 import com.example.paymobtechnicaltask.data.datasource.RemoteDataSource
-import com.example.paymobtechnicaltask.data.remote.dto.MovieDetailsDto.Companion.toMovieDetailsModel
-import com.example.paymobtechnicaltask.data.remote.dto.MovieDto.Companion.toMovie
+import com.example.paymobtechnicaltask.data.remote.dto.toMovie
+import com.example.paymobtechnicaltask.data.remote.dto.toMovieDetailsModel
 import com.example.paymobtechnicaltask.data.utils.safeApiCall
 import com.example.paymobtechnicaltask.domain.model.Movie
 import com.example.paymobtechnicaltask.domain.model.MovieDetailsModel
@@ -22,6 +22,12 @@ class MoviesRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : MoviesRepository {
 
+    /**
+     * Retrieves a paginated flow of movies from the remote data source and maps them to domain models.
+     * Also marks each movie as favorite if its ID exists in the local favorites database.
+     *
+     * @return A [Flow] of [PagingData] containing a list of [Movie].
+     */
     override suspend fun getMovies(): Flow<PagingData<Movie>> {
         val favoriteIds = localDataSource.getFavoriteMovies().map { it.id }
 
@@ -34,23 +40,32 @@ class MoviesRepositoryImpl @Inject constructor(
                 remoteDataSource.getMovies()
             }
         ).flow.map { pagingData ->
+            // Map the MovieDto to MovieModel and set the isFavorite flag
             pagingData.map { movieDto ->
                 movieDto.toMovie().copy(isFavorite = favoriteIds.contains(movieDto.id))
             }
         }
     }
 
-    override suspend fun getMovieDetails(movieId: Int) = safeApiCall {
+    /**
+     * Retrieves movie details from the remote data source
+     * and combines it with local data to determine the favorite status of the movie.
+     *
+     * @param movieId The ID of the movie.
+     * @return A [Flow] of [DataState] containing [MovieDetailsModel], with an `isFavorite` flag.
+     */
+    override suspend fun getMovieDetails(movieId: Int): Flow<DataState<MovieDetailsModel>> = safeApiCall {
         val isFavorite = localDataSource.getFavoriteMovies().any { it.id == movieId}
         remoteDataSource.getMovieDetails(movieId).toMovieDetailsModel().copy(isFavorite = isFavorite)
     }
 
-    // Local
-    override suspend fun addToFavorites(id: Int) {
-        localDataSource.addToFavorites(id)
+
+    // ------------------ Local --------------------
+    override suspend fun addToFavorites(movieId: Int) {
+        localDataSource.addToFavorites(movieId)
     }
 
-    override suspend fun removeFromFavorites(id: Int) {
-        localDataSource.removeFromFavorites(id)
+    override suspend fun removeFromFavorites(movieId: Int) {
+        localDataSource.removeFromFavorites(movieId)
     }
 }

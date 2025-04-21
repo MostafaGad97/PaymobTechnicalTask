@@ -5,6 +5,6 @@ import com.example.paymobtechnicaltask.data.local.entity.MovieEntity
 interface LocalDataSource {
     suspend fun getFavoriteMovies(): List<MovieEntity>
 
-    suspend fun addToFavorites(id: Int)
-    suspend fun removeFromFavorites(id: Int)
+    suspend fun addToFavorites(movieId: Int)
+    suspend fun removeFromFavorites(movieId: Int)
 }

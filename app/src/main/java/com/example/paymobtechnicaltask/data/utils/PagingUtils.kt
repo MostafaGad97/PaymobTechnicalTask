@@ -8,6 +8,13 @@ import java.io.IOException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException
 
+/**
+ * Handles exceptions thrown during a Paging 3 data load and maps them
+ * to appropriate [PagingSource.LoadResult.Error] with custom exceptions.
+ *
+ * @param exception The exception thrown during paging
+ * @return A LoadResult error containing a custom or raw exception
+ */
 fun <T: Any> handlePagingError(exception: Exception) : PagingSource.LoadResult<Int, T> {
     return when(exception) {
         is UnknownHostException -> PagingSource.LoadResult.Error(NetworkExceptions.UnknownHostException)
