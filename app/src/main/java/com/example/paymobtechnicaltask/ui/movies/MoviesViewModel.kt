@@ -33,7 +33,10 @@ class MoviesViewModel @Inject constructor(
 
     fun toggleFavorite(movie: Movie) {
         viewModelScope.launch {
-            toggleFavoriteUseCase.invoke(movie)
+            toggleFavoriteUseCase.invoke(
+                movieId = movie.id,
+                isFavorite = movie.isFavorite
+            )
         }
     }
 }

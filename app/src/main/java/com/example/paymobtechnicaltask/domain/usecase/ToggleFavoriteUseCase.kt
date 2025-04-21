@@ -7,11 +7,11 @@ import javax.inject.Inject
 class ToggleFavoriteUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository
 ) {
-    suspend operator fun invoke(movie: Movie) {
-        if(movie.isFavorite) {
-            moviesRepository.addToFavorites(movie.id)
+    suspend operator fun invoke(movieId: Int, isFavorite: Boolean) {
+        if(isFavorite) {
+            moviesRepository.addToFavorites(movieId)
         } else {
-            moviesRepository.removeFromFavorites(movie.id)
+            moviesRepository.removeFromFavorites(movieId)
         }
     }
 }
