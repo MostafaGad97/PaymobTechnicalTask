@@ -23,7 +23,6 @@ fun <T: Any> handlePagingError(exception: Exception) : PagingSource.LoadResult<I
                 else {
                     PagingSource.LoadResult.Error(NetworkExceptions.HttpException(exception.message()))
                 }
-
             } catch (e: Exception) {
                 PagingSource.LoadResult.Error(e)
             }

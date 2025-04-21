@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
 ): ViewModel() {
 
     private val _moviesResponse = MutableStateFlow<PagingData<Movie>>(PagingData.empty())

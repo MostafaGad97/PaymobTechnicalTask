@@ -6,9 +6,13 @@ import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.paymobtechnicaltask.data.datasource.LocalDataSource
 import com.example.paymobtechnicaltask.data.datasource.RemoteDataSource
+import com.example.paymobtechnicaltask.data.remote.dto.MovieDetailsDto.Companion.toMovieDetailsModel
 import com.example.paymobtechnicaltask.data.remote.dto.MovieDto.Companion.toMovie
+import com.example.paymobtechnicaltask.data.utils.safeApiCall
 import com.example.paymobtechnicaltask.domain.model.Movie
+import com.example.paymobtechnicaltask.domain.model.MovieDetailsModel
 import com.example.paymobtechnicaltask.domain.repository.MoviesRepository
+import com.example.paymobtechnicaltask.domain.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -34,6 +38,11 @@ class MoviesRepositoryImpl @Inject constructor(
                 movieDto.toMovie().copy(isFavorite = favoriteIds.contains(movieDto.id))
             }
         }
+    }
+
+    override suspend fun getMovieDetails(movieId: Int) = safeApiCall {
+        val isFavorite = localDataSource.getFavoriteMovies().any { it.id == movieId}
+        remoteDataSource.getMovieDetails(movieId).toMovieDetailsModel().copy(isFavorite = isFavorite)
     }
 
     // Local

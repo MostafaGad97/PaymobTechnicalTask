@@ -11,7 +11,7 @@ import com.example.paymobtechnicaltask.ui.utils.getMoviePosterUrl
 import com.example.paymobtechnicaltask.ui.utils.loadImageFromUrl
 
 class MoviesAdapter(
-    private val onFavoriteClicked: (Movie) -> Unit
+    private val movieClickListener: MovieClickListener
 ) : PagingDataAdapter<Movie, MoviesAdapter.MovieViewHolder>(MovieComparator) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -38,7 +38,11 @@ class MoviesAdapter(
                 btnFavorite.setOnClickListener {
                     btnFavorite.isSelected = !btnFavorite.isSelected
                     movie.isFavorite = btnFavorite.isSelected
-                    onFavoriteClicked(movie)
+                    movieClickListener.onFavoriteClick(movie)
+                }
+
+                itemView.setOnClickListener {
+                    movieClickListener.onMovieClick(movie)
                 }
             }
         }
@@ -53,4 +57,9 @@ class MoviesAdapter(
             return oldItem == newItem
         }
     }
+}
+
+interface MovieClickListener {
+    fun onMovieClick(movie: Movie)
+    fun onFavoriteClick(movie: Movie)
 }
