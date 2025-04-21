@@ -12,11 +12,11 @@ class LocalDataSourceImpl @Inject constructor(
         return moviesDao.getFavoriteMovies()
     }
 
-    override suspend fun addToFavorites(id: Int) {
-        moviesDao.addToFavorites(id)
+    override suspend fun addToFavorites(movieId: Int) {
+        moviesDao.addToFavorites(movieId)
     }
 
-    override suspend fun removeFromFavorites(id: Int) {
-        moviesDao.removeFromFavorites(id)
+    override suspend fun removeFromFavorites(movieId: Int) {
+        moviesDao.removeFromFavorites(movieId)
     }
 }

@@ -23,8 +23,8 @@ android {
         versionName = "1.0"
 
         val properties = Properties()
-        if (project.rootProject.file("Config").canRead()) {
-            properties.load(FileInputStream(project.rootProject.file("config")))
+        if (project.rootProject.file("local.properties").canRead()) {
+            properties.load(FileInputStream(project.rootProject.file("local.properties")))
         }
         buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
         buildConfigField("String", "REMOTE_URL", properties.getProperty("REMOTE_URL"))

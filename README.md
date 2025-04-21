@@ -11,7 +11,7 @@ A modern Android application built with **Kotlin**, following **Clean Architectu
   View in-depth information about the selected movie.
 
 - **Favorites**  
-  Add or remove movies from your favorites, stored locally with **Room**.
+  Add or remove movies from your favorites.
 
 ## 🛠️ Tech Stack
 Language: Kotlin

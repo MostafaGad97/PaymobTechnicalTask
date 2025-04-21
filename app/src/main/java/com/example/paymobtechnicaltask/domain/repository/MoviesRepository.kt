@@ -10,6 +10,6 @@ interface MoviesRepository {
     suspend fun getMovies(): Flow<PagingData<Movie>>
     suspend fun getMovieDetails(movieId: Int): Flow<DataState<MovieDetailsModel>>
 
-    suspend fun addToFavorites(id: Int)
-    suspend fun removeFromFavorites(id: Int)
+    suspend fun addToFavorites(movieId: Int)
+    suspend fun removeFromFavorites(movieId: Int)
 }

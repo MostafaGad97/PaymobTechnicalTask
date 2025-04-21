@@ -13,16 +13,14 @@ data class MovieDto(
     @SerialName("original_title") val originalTitle: String? = "",
     @SerialName("release_date") val releaseDate: String? = "",
     @SerialName("vote_average") val voteAverage: Float? = 0f,
-) {
-    companion object {
-        fun MovieDto.toMovie(): Movie {
-            return Movie(
-                id = this.id ?: 0,
-                title = this.title ?: "",
-                releaseDate = this.releaseDate ?: "",
-                posterPath = this.posterPath ?: "",
-                voteAverage = this.voteAverage?.roundToOneDecimalNumber() ?: 0f,
-            )
-        }
-    }
+)
+
+fun MovieDto.toMovie(): Movie {
+    return Movie(
+        id = this.id ?: 0,
+        title = this.title ?: "",
+        releaseDate = this.releaseDate ?: "",
+        posterPath = this.posterPath ?: "",
+        voteAverage = this.voteAverage?.roundToOneDecimalNumber() ?: 0f,
+    )
 }

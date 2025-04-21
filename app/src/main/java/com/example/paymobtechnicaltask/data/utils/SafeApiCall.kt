@@ -12,6 +12,17 @@ import java.io.IOException
 import java.net.UnknownHostException
 import java.util.concurrent.TimeoutException
 
+/**
+ * Executes a API call safely and emits the result as a Flow of [DataState].
+ *
+ * Emits:
+ * - [DataState.Loading] initially
+ * - [DataState.Success] on success
+ * - [DataState.Error] on failure with appropriate error type
+ *
+ * @param apiCall The API request to perform.
+ */
+
 suspend fun <T> safeApiCall(
     apiCall: suspend () -> T
 ): Flow<DataState<T>> = flow {
@@ -23,10 +34,26 @@ suspend fun <T> safeApiCall(
     emit(handleError(e))
 }
 
+
+/**
+ * Handles a successful API response.
+ *
+ * @param response The response returned from the API call
+ * @return [DataState.Success] if response is not null, otherwise an Error state
+ */
+
 fun <T> handleSuccess(response: T): DataState<T> {
     if (response != null) return DataState.Success(response)
     return DataState.Error(NetworkExceptions.UnknownException)
 }
+
+
+/**
+ * Maps thrown exceptions to custom [NetworkExceptions] wrapped in [DataState].
+ *
+ * @param it The thrown exception
+ * @return [DataState] with appropriate [NetworkExceptions] type
+ */
 
 fun <T> handleError(it: Throwable): DataState<T> {
     return when (it) {
@@ -51,6 +78,14 @@ fun <T> handleError(it: Throwable): DataState<T> {
         }
     }
 }
+
+
+/**
+ * Parses the [HttpException] error body to [ErrorResponse] and extracts the status message.
+ *
+ * @param exception The [HttpException] thrown during the API call
+ * @return A specific [NetworkExceptions.HttpException] or [NetworkExceptions.UnknownException]
+ */
 
 fun handleHttpException(exception: HttpException): NetworkExceptions {
     return try {

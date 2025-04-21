@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import com.example.paymobtechnicaltask.R
 import com.example.paymobtechnicaltask.domain.exceptions.NetworkExceptions
 
+/**
+ * Extension function to display error messages in a Toast
+ * based on the type of NetworkException received.
+ *
+ * @param throwable The [Throwable] to evaluate and display
+ */
 fun Fragment.showErrorMessage(throwable: Throwable) {
     val errorMsg = when (throwable) {
         is NetworkExceptions.UnknownHostException -> getString(R.string.no_internet_connection)
