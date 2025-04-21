@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.viewbinding.ViewBinding
 import com.example.paymobtechnicaltask.R
 
@@ -25,12 +27,13 @@ abstract class BaseFragment<VB: ViewBinding>(
         return binding.root
     }
 
-    protected fun initToolbar(toolbar: Toolbar, title: String) {
+    protected fun initToolbar(toolbar: Toolbar, title: String = "") {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = title
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationIcon(R.drawable.ic_back)
+        NavigationUI.setupWithNavController(toolbar, findNavController())
     }
 
     override fun onDestroyView() {
