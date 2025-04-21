@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialization.plugin)
+    id("androidx.navigation.safeargs")
 }
 
 
@@ -22,8 +23,8 @@ android {
         versionName = "1.0"
 
         val properties = Properties()
-        if (project.rootProject.file("Config").canRead()) {
-            properties.load(FileInputStream(project.rootProject.file("config")))
+        if (project.rootProject.file("local.properties").canRead()) {
+            properties.load(FileInputStream(project.rootProject.file("local.properties")))
         }
         buildConfigField("String", "API_KEY", properties.getProperty("API_KEY"))
         buildConfigField("String", "REMOTE_URL", properties.getProperty("REMOTE_URL"))
@@ -86,6 +87,7 @@ dependencies {
     implementation(libs.jakewharton.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.okhttp)
     implementation(libs.gson)
+    implementation(libs.logging.interceptor)
 
     //Room
     implementation(libs.androidx.room.runtime)
@@ -97,6 +99,10 @@ dependencies {
 
     //Paging
     implementation(libs.androidx.paging.runtime)
+
+    //Intuit
+    implementation(libs.sdp.android)
+    implementation(libs.intuit.ssp.android)
 
     // Testing
     testImplementation(libs.junit)

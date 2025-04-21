@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">PaymobTechnicalTask</string>
+    <string name="best_movies_in_2024">Best movies in 2024</string>
+    <string name="retry">Retry</string>
+    <string name="connection_timeout">Connection timeout</string>
+    <string name="network_error_please_check_your_internet_connection">Network error. Please check your internet connection.</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="release_data_s">Release data: %s</string>
+    <string name="language_s">Language: %s</string>
 </resources>

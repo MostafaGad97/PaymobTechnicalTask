@@ -18,6 +18,9 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
+import com.ihsanbal.logging.Level
+import com.ihsanbal.logging.LoggingInterceptor
+import okhttp3.internal.platform.Platform
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -50,17 +53,37 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun loggingInterceptor(): LoggingInterceptor {
+        return LoggingInterceptor.Builder()
+            .setLevel(Level.BASIC)
+            .log(Platform.INFO)
+            .request("Request")
+            .response("Response")
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideOkHttpClient(
-        @StringsModule.ApiKey apiKey: String
+        @StringsModule.ApiKey apiKey: String,
+        loggingInterceptor: LoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor { chain ->
-                val original = chain.request()
-                val requestBuilder = original.newBuilder()
-                    .header(Constants.API_KEY, apiKey)
-                val request = requestBuilder.build()
+                val originalRequest = chain.request()
+
+                val url = originalRequest.url.newBuilder()
+                    .addQueryParameter(Constants.API_KEY, apiKey)
+                    .build()
+
+                val request = originalRequest.newBuilder()
+                    .url(url)
+                    .build()
+
                 return@addInterceptor chain.proceed(request)
-            }.connectTimeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
+            }
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
             .readTimeout(NETWORK_TIMEOUT, TimeUnit.MILLISECONDS)
             .build()
     }

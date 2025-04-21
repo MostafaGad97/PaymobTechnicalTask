@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.viewbinding.ViewBinding
 import com.example.paymobtechnicaltask.R
+import com.google.android.material.appbar.MaterialToolbar
 
 abstract class BaseFragment<VB: ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB): Fragment() {
@@ -25,11 +28,12 @@ abstract class BaseFragment<VB: ViewBinding>(
         return binding.root
     }
 
-    protected fun initToolbar(toolbar: Toolbar, title: String) {
+    protected fun initToolbar(toolbar: Toolbar, title: String = "") {
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = title
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        NavigationUI.setupWithNavController(toolbar, findNavController())
         toolbar.setNavigationIcon(R.drawable.ic_back)
     }
 
