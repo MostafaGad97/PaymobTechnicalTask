@@ -1,13 +1,9 @@
 package com.example.paymobtechnicaltask.ui.movie_details
 
-import android.os.Binder
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -44,7 +40,10 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(FragmentM
         with(binding) {
             btnFavorite.setOnClickListener {
                 btnFavorite.isSelected = !btnFavorite.isSelected
-                viewModel.toggleFavorite(args.movieId)
+                viewModel.toggleFavorite(
+                    movieId = args.movieId,
+                    isFavorite = btnFavorite.isSelected
+                )
             }
         }
     }
